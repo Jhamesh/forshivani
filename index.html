@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Shivani ✨</title>
+    
+    <!-- Modern fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=La+Belle+Aurore&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent: #ff3366;
+            --accent-light: #ff85a1;
+            --bg: #0a0a12;
+            --text: #fff;
+            --card: rgba(255,255,255,0.03);
+        }
+
+        @property --gradient-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        .aurora-container {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(76, 0, 255, 0.1) 0%,
+                rgba(255, 0, 128, 0.1) 25%,
+                transparent 50%);
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: aurora 15s linear infinite;
+        }
+
+        @keyframes aurora {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.5); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .particle-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .main-container {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .card {
+            position: relative;
+            width: min(90vw, 800px);
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.1);
+        }
+
+        .card::before,
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            background: conic-gradient(
+                from var(--gradient-angle),
+                #ff3366,
+                #ff85a1,
+                #ffd4e3,
+                #ff85a1,
+                #ff3366
+            );
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+
+        .card::after {
+            filter: blur(12px);
+            opacity: 0.4;
+            animation: rotate 4s linear infinite reverse;
+        }
+
+        .card::before {
+            opacity: 0.8;
+            animation-duration: 3s;
+        }
+
+        @keyframes rotate {
+            0% { --gradient-angle: 0deg; }
+            100% { --gradient-angle: 360deg; }
+        }
+
+        /* Add this new shimmer effect */
+        .card .shimmer {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: translateX(-100%);
+            animation: shimmer 6s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            20% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .title {
+            font-family: 'La Belle Aurore', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: slideIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            text-align: center;
+        }
+
+        .message {
+            font-family: 'Cormorant Garamond', serif; /* Changed font */
+            font-size: 1.3rem;  /* Slightly larger */
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.3px;  /* Added letter spacing */
+            color: rgba(255, 255, 255, 0.95);  /* Slightly softer white */
+        }
+
+        .message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .signature {
+            font-family: 'La Belle Aurore', cursive;
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            text-align: right;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .heart-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 2rem auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .heart-container:hover {
+            transform: scale(1.1);
+        }
+
+        .heart {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transform: rotate(45deg);
+            animation: heartbeat 1.4s ease-in-out infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            left: -50%;
+        }
+
+        .heart::after {
+            top: -50%;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: rotate(45deg) scale(1); }
+            14% { transform: rotate(45deg) scale(1.1); }
+            28% { transform: rotate(45deg) scale(1); }
+            42% { transform: rotate(45deg) scale(1.1); }
+            70% { transform: rotate(45deg) scale(1); }
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .heart-rain {
+            position: fixed;
+            top: -20px;
+            font-size: 12px;
+            animation: rain linear infinite;
+            color: var(--accent-light);
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes rain {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(98vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive improvements for mobile and laptop */
+        html,body {
+            -webkit-font-smoothing:antialiased;
+            -webkit-text-size-adjust:100%;
+            height:100%;
+            margin:0;
+            padding:0;
+            background:var(--bg);
+            overflow-y:auto; /* allow scrolling on small screens */
+        }
+
+        .main-container { padding: 1.6rem; }
+
+        .card {
+            width: min(92vw, 820px); /* responsive width */
+            padding: clamp(1.4rem, 2.8vw, 3rem);
+            border-radius: clamp(12px, 2vw, 20px);
+        }
+
+        .title { font-size: clamp(1.6rem, 6vw, 3.6rem); }
+
+        .message { font-size: clamp(1rem, 3.2vw, 1.3rem); line-height:1.6; }
+
+        .signature { font-size: clamp(1.1rem, 3.8vw, 1.8rem); }
+
+        /* softer decorative layers on small screens */
+        @media (max-width: 780px) {
+            .aurora-container { filter: blur(40px); opacity:0.38; }
+            .particle-canvas { opacity:0.35; }
+            .card::before, .card::after { opacity: 0.5; filter: blur(8px); }
+            .heart-container { width:50px; height:50px; margin:1.2rem auto; }
+            .floating-element { animation-duration: 2.2s; }
+            .heart-rain { font-size: 10px; }
+        }
+
+        /* reduce motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .aurora-container, .card::before, .card::after, .card .shimmer,
+            .particle-canvas, .floating-element { animation: none !important; transition: none !important; }
+        }
+
+        /* ensure heart touch target is friendly */
+        .heart-container { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+        /* make floating hearts smaller on mobile */
+        .floating-element { pointer-events:none; z-index:6; user-select:none; }
+
+        /* ensure heart rain appears below card but above background */
+        .heart-rain { z-index: 2; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <canvas class="particle-canvas" id="particleCanvas"></canvas>
+    <div class="aurora-container"></div>
+    
+    <main class="main-container">
+        <div class="card" id="loveCard">
+            <h1 class="title">My Dearest Shivani</h1>
+            
+            <p class="message" data-delay="0.3">
+                ✨ Like stars that paint stories across the night sky, my feelings for you have created constellations of memories that light up my world.
+            </p>
+            
+            <p class="message" data-delay="0.6">
+                🌸 After all these years, seeing you again felt like watching a sunrise I'd been waiting for - familiar yet breathtaking, painting everything in new colors.
+            </p>
+            
+            <p class="message" data-delay="0.9">
+                💫 You've always been that special dream I kept close, turning ordinary moments into magic just by being you.
+            </p>
+            
+            <p class="message" data-delay="1.2">
+                🌙 Time may have passed like shooting stars, but my heart never forgot its favorite constellation - the way you smile, the gentle warmth you carry.
+            </p>
+
+            <div class="heart-container" id="heartBtn">
+                <div class="heart"></div>
+            </div>
+            
+            <p class="message signature" data-delay="1.5">
+                Forever yours,<br>
+                Jhamesh
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.life = 1;
+                this.color = `hsla(${Math.random() * 60 + 330}, 100%, 75%, ${Math.random() * 0.3 + 0.1})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.003;
+
+                if (this.life <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 3D Card Effect
+        const card = document.getElementById('loveCard');
+        
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth <= 768) return;
+            
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = -(x - centerX) / 20;
+            
+            card.style.transform = `
+                perspective(1000px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+            `;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+
+        // Message Animation
+        const messages = document.querySelectorAll('.message');
+        
+        function revealMessages() {
+            messages.forEach(msg => {
+                msg.classList.remove('visible');
+                setTimeout(() => {
+                    msg.classList.add('visible');
+                }, parseFloat(msg.dataset.delay) * 1000);
+            });
+        }
+
+        revealMessages();
+
+        // Heart Button Interaction
+        const heartBtn = document.getElementById('heartBtn');
+        
+        heartBtn.addEventListener('click', () => {
+            createFloatingHearts();
+            revealMessages();
+            toggleHeartRain(); // Toggle rain on/off with each click
+            
+            // Stop rain after 4 seconds
+            setTimeout(() => {
+                if (isRaining) {
+                    toggleHeartRain();
+                }
+            }, 4000);
+        });
+
+        function createFloatingHearts() {
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-element';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.top = `${Math.random() * 100}%`;
+                    heart.style.fontSize = `${24 + Math.random() * 24}px`;
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 100);
+            }
+        }
+
+        // Heart Rain Effect
+        function createHeartRain() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '♥';
+            heart.className = 'heart-rain';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; // Random duration between 2-5s
+            heart.style.fontSize = (Math.random() * 8 + 8) + 'px'; // Random size between 8-16px
+            heart.style.opacity = Math.random() * 0.6 + 0.4; // Random opacity
+            
+            document.body.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, parseFloat(heart.style.animationDuration) * 1000);
+        }
+
+        // Start heart rain
+        let isRaining = false;
+        const rainInterval = 100; // Adjust for more/less hearts
+        let rainTimer;
+
+        function toggleHeartRain() {
+            isRaining = !isRaining;
+            if (isRaining) {
+                rainTimer = setInterval(createHeartRain, rainInterval);
+            } else {
+                clearInterval(rainTimer);
+            }
+        }
+    </script>
+</body>
+</html>
